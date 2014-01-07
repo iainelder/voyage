@@ -26,9 +26,8 @@ var voyage = {
     XPCOMUtilsExtra.defineLazyServiceGetter(this, "_faviconService", "@mozilla.org/browser/favicon-service;1", "nsIFaviconService");
 
     /* Find out if we are in private browsing mode, if true, display error message */
-    var privateSvc = Cc["@mozilla.org/privatebrowsing;1"].getService(Ci.nsIPrivateBrowsingService);  
-    this.inPrivate = privateSvc.privateBrowsingEnabled;  
-  },
+    var privateSvc = Components.utils.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
+    this.inPrivate = PrivateBrowsingUtils.isWindowPrivate(window);  },
   onDOMReady: function() {
     if (this.inPrivate) {
       $('#container').remove();
